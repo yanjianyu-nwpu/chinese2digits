@@ -19,7 +19,7 @@ import (
 // 中文转阿拉伯数字
 var chineseCharNumberDict = map[string]int{"幺": 1, "零": 0, "一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5,
 	"六": 6, "七": 7, "八": 8, "九": 9, "十": 10, "百": 100,
-	"千": 1000, "万": 10000,"亿": 100000000, "壹": 1, "贰": 2, "叁": 3, "肆": 4, "伍": 5, "陆": 6, "柒": 7, "捌": 8, "玖": 9, "拾": 10,
+	"千": 1000, "万": 10000, "亿": 100000000, "壹": 1, "贰": 2, "叁": 3, "肆": 4, "伍": 5, "陆": 6, "柒": 7, "捌": 8, "玖": 9, "拾": 10,
 	"佰": 100, "仟": 1000}
 
 // var chinesePercentString = "百分之"
@@ -514,7 +514,7 @@ func (a structToReplace) Less(i, j int) bool { return a[j].CHNumberStringLen < a
 var CHINESE_PURE_COUNTING_UNIT_LIST = [5]string{"十", "百", "千", "万", "亿"}
 
 var TRADITIONAl_CONVERT_DICT = map[string]string{"壹": "一", "贰": "二", "叁": "三", "肆": "四", "伍": "五", "陆": "六", "柒": "七",
-	"捌": "八", "玖": "九","〇":"零"}
+	"捌": "八", "玖": "九", "〇": "零"}
 var SPECIAL_TRADITIONAl_COUNTING_UNIT_CHAR_DICT = map[string]string{"拾": "十", "佰": "百", "仟": "千", "萬": "万", "億": "亿"}
 
 var SPECIAL_NUMBER_CHAR_DICT = map[string]string{"两": "二", "俩": "二"}
@@ -699,7 +699,7 @@ func checkSignSeg(chineseNumberList []string) []string {
 }
 
 // TakeChineseNumberFromString 将句子中的汉子数字提取的整体函数
-func TakeChineseNumberFromString(chTextString string, opt ...interface{}) interface{} {
+func TakeChineseNumberFromString(chTextString string, opt ...interface{}) *NumberResult {
 
 	CHNumberStringList := []string{}
 
@@ -820,11 +820,12 @@ func TakeChineseNumberFromString(chTextString string, opt ...interface{}) interf
 		}
 
 	}
-	finalResult := map[string]interface{}{
-		"inputText":          chTextString,
-		"replacedText":       replacedText,
-		"CHNumberStringList": OriginCHNumberForOutput,
-		"digitsStringList":   digitsStringList,
+
+	finalResult := &NumberResult{
+		InputText:       chTextString,
+		ReplacedText:    replacedText,
+		CHNumberStrList: OriginCHNumberForOutput,
+		DigitsStrList:   digitsStringList,
 	}
 	return finalResult
 
@@ -835,7 +836,7 @@ func TakeChineseNumberFromString(chTextString string, opt ...interface{}) interf
 // :param percentConvert: convert percent simple. Default is True.  3% will be 0.03 in the result
 // :param traditionalConvert: Switch to convert the Traditional Chinese character to Simplified chinese
 // :return: Dict like result. 'inputText',replacedText','CHNumberStringList':CHNumberStringList,'digitsStringList'
-func TakeNumberFromString(chTextString string, opt ...interface{}) interface{} {
+func TakeNumberFromString(chTextString string, opt ...interface{}) *NumberResult {
 
 	//默认参数设置
 	if len(opt) > 2 {

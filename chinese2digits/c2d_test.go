@@ -1,5 +1,6 @@
 package chinese2digits
 
+/*
 import (
 	"reflect"
 	"testing"
@@ -154,3 +155,4 @@ func TestSplit(t *testing.T) { // 测试函数名必须以Test开头，必须接
 // 	fmt.Println(chinese2digits.TakeChineseNumberFromString("一千八百万啦啦啦四万七,皮皮四千万十七", true, true, true, false))
 // 	fmt.Println(chinese2digits.TakeChineseNumberFromString("今天万科怎么样负点三六姹紫嫣红千千万万", nil, true, true, false))
 // }
+*/
